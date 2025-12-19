@@ -1,13 +1,10 @@
 #include "ps4.h"
 
-void sceSysUtilSendSystemNotificationWithText(int type, char* message);
+void sceSysUtilSendSystemNotificationWithText(int type, const char* message);
 
 int _main(struct thread *td, void *uap) {
-    char msg[100];
-
-    for(int i = 0; i < 100; i++) msg[i] = 0;
-
-    char* text = "Hello World! \n haider is here.";
+    char msg[100] = {0};
+    const char* text = "Hello World! \n haider is here.";
     
     for(int i = 0; text[i] != '\0' && i < 99; i++) {
         msg[i] = text[i];
@@ -17,4 +14,3 @@ int _main(struct thread *td, void *uap) {
 
     return 0;
 }
-
