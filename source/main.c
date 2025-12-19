@@ -1,7 +1,5 @@
 #include "ps4.h"
 
-void sceSysUtilSendSystemNotificationWithText(int type, const char* message);
-
 int _main(struct thread *td, void *uap) {
     char msg[100] = {0};
     const char* text = "Hello World! \n haider is here.";
