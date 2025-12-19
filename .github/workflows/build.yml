@@ -13,18 +13,13 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake binutils gcc-multilib g++-multilib wget
+          sudo apt-get install -y cmake binutils gcc-multilib g++-multilib wget unzip
 
       - name: Setup OpenOrbis SDK
         run: |
-          wget https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/archive/refs/tags/v0.5.3.tar.gz -O sdk.tar.gz
+          wget https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.2/OpenOrbis-PS4-Toolchain.zip -O sdk.zip
           mkdir -p $HOME/sdk
-          tar -xzf sdk.tar.gz -C $HOME/sdk --strip-components=1
-          
-          mkdir -p $HOME/sdk/lib
-          wget https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.2/libSceKernel.a -O $HOME/sdk/lib/libSceKernel.a
-          wget https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.2/libSceSysUtil.a -O $HOME/sdk/lib/libSceSysUtil.a
-
+          unzip sdk.zip -d $HOME/sdk
           echo "OO_PS4_TOOLCHAIN=$HOME/sdk" >> $GITHUB_ENV
           echo "$HOME/sdk/bin" >> $GITHUB_PATH
 
