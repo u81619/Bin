@@ -6,7 +6,6 @@ SDIR        = source
 IDIR        = include
 
 CFLAGS      = -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC
-# حذفنا المكتبات التي تسبب الخطأ وأبقينا فقط خيارات الربط الأساسية
 LDFLAGS     = -T linker.x -nodefaultlibs -nostdlib -static
 
 CFILES      = $(wildcard $(SDIR)/*.c)
