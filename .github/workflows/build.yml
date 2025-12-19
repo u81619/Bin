@@ -1,0 +1,23 @@
+name: Build PS4 Payload
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: openorbis/ps4dev:latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Payload
+        run: |
+          make
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: PS4-Payload
+          path: Payload.bin
+          
