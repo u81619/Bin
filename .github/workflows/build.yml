@@ -5,11 +5,21 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: openorbis/ps4dev:latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake binutils gcc-multilib g++-multilib
+
+      - name: Setup OpenOrbis SDK
+        run: |
+          git clone https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain.git $HOME/sdk
+          echo "OO_PS4_TOOLCHAIN=$HOME/sdk" >> $GITHUB_ENV
+          echo "$HOME/sdk/bin" >> $GITHUB_PATH
 
       - name: Build Payload
         run: |
