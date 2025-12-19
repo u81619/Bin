@@ -1,19 +1,16 @@
-Target		= Payload
-OutDir		= $(shell pwd)
-CC		= gcc
-AS		= gcc
-OBJCOPY		= objcopy
-ODIR		= build
-SDIR		= source
-IDIR		= include
-LDIR		= lib
+Target      = Payload
+CC          = gcc
+OBJCOPY     = objcopy
+ODIR        = build
+SDIR        = source
+IDIR        = include
 
-LIBS		= -lSceLibcInternal -lSceSysUtil
-CFLAGS		= -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC
-LDFLAGS		= -T linker.x -nodefaultlibs -nostdlib -static $(LIBS)
+CFLAGS      = -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC
+# حذفنا المكتبات التي تسبب الخطأ وأبقينا فقط خيارات الربط الأساسية
+LDFLAGS     = -T linker.x -nodefaultlibs -nostdlib -static
 
-CFILES		= $(wildcard $(SDIR)/*.c)
-OBJS		= $(CFILES:$(SDIR)/%.c=$(ODIR)/%.o)
+CFILES      = $(wildcard $(SDIR)/*.c)
+OBJS        = $(CFILES:$(SDIR)/%.c=$(ODIR)/%.o)
 
 all: $(Target).bin
 
@@ -27,4 +24,5 @@ $(Target).bin: $(OBJS)
 
 clean:
 	rm -rf $(Target).bin $(Target).elf $(ODIR)
-  
+
+
