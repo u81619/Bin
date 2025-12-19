@@ -23,7 +23,8 @@ jobs:
 
       - name: Build Payload
         run: |
-          make
+          mkdir -p build
+          make OO_PS4_TOOLCHAIN=$HOME/sdk
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
