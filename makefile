@@ -6,8 +6,9 @@ IDIR := include
 
 OO_PS4_TOOLCHAIN ?= $(HOME)/sdk
 LIBDIR := $(OO_PS4_TOOLCHAIN)/lib
+INCDIR := $(OO_PS4_TOOLCHAIN)/include
 
-CFLAGS := -I$(IDIR) -I$(OO_PS4_TOOLCHAIN)/include -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC -c
+CFLAGS := -I$(IDIR) -I$(INCDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC -c
 LDFLAGS := -T linker.x -nodefaultlibs -nostdlib -static -L$(LIBDIR) -lSceSysUtil -lSceKernel
 
 $(ODIR)/%.o: $(SDIR)/%.c
