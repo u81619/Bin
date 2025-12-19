@@ -11,6 +11,7 @@ CFLAGS := -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -f
 LDFLAGS := -T linker.x -nodefaultlibs -nostdlib -static -L$(LIBDIR) -lSceSysUtil -lSceKernel
 
 $(ODIR)/%.o: $(SDIR)/%.c
+	mkdir -p $(ODIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 Payload.elf: $(ODIR)/main.o
@@ -20,4 +21,3 @@ Payload.bin: Payload.elf
 	$(OBJCOPY) -O binary Payload.elf Payload.bin
 
 all: Payload.bin
-
