@@ -1,27 +1,23 @@
-Target      = Payload
-CC          = gcc
-OBJCOPY     = objcopy
-ODIR        = build
-SDIR        = source
-IDIR        = include
+CC := gcc
+OBJCOPY := objcopy
+ODIR := build
+SDIR := source
+IDIR := include
 
-CFLAGS      = -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC
-LDFLAGS     = -T linker.x -nodefaultlibs -nostdlib -static
+OO_PS4_TOOLCHAIN ?= $(HOME)/sdk
+LIBDIR := $(OO_PS4_TOOLCHAIN)/lib
 
-CFILES      = $(wildcard $(SDIR)/*.c)
-OBJS        = $(CFILES:$(SDIR)/%.c=$(ODIR)/%.o)
-
-all: $(Target).bin
+CFLAGS := -I$(IDIR) -Os -std=c11 -ffreestanding -fno-common -fno-builtin -m64 -fPIC -c
+LDFLAGS := -T linker.x -nodefaultlibs -nostdlib -static -L$(LIBDIR) -lSceSysUtil -lSceKernel
 
 $(ODIR)/%.o: $(SDIR)/%.c
-	@mkdir -p $(ODIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
-$(Target).bin: $(OBJS)
-	$(CC) $(OBJS) $(LDFLAGS) -o $(Target).elf
-	$(OBJCOPY) -O binary $(Target).elf $(Target).bin
+Payload.elf: $(ODIR)/main.o
+	$(CC) $(ODIR)/main.o $(LDFLAGS) -o Payload.elf
 
-clean:
-	rm -rf $(Target).bin $(Target).elf $(ODIR)
+Payload.bin: Payload.elf
+	$(OBJCOPY) -O binary Payload.elf Payload.bin
 
+all: Payload.bin
 
